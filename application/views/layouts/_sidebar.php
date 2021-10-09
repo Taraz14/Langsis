@@ -11,7 +11,7 @@
               <img src="<?= base_url() ?>/public/admin/img/logo/smk.png">
           </div>
           <!-- <div class="sidebar-brand-text mx-3">Smk Negeri 1 Kab. Sorong</div> -->
-          <div class="sidebar-brand-text mx-3">Langsis</div>
+          <div class="sidebar-brand-text mx-3">Langsis <br />SMK</div>
       </a>
       <hr class="sidebar-divider my-0">
       <li class="nav-item <?= $home == 'dashboard' ? 'active' : '' ?>">
