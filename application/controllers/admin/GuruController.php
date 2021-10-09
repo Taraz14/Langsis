@@ -7,7 +7,7 @@ class GuruController extends CI_Controller
     public function index()
     {
         $data = [
-            'content' => 'pages/admin/data_user',
+            'content' => 'pages/admin/data_guru',
             'head' => 'Guru'
         ];
 

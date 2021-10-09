@@ -30,7 +30,7 @@
             <span>copyright &copy; <script>
                     document.write(new Date().getFullYear());
                 </script> - developed by
-                <b><a href="https://github.com/taraz14" target="_blank">Meliodas</a></b> templated by
+                <b><a href="https://github.com/taraz14" target="_blank">Dante</a></b> templated by
                 <b><a href="https://indrijunanda.gitlab.io/" target="_blank">indrijunanda</a></b>
 
             </span>

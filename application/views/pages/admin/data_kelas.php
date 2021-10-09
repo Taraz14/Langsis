@@ -6,7 +6,7 @@
                 <h6 class="m-0 font-weight-bold text-primary">Input Kelas</h6>
             </div>
             <div class="card-body">
-                <form id="savekelas" action="<?= site_url('admin/jurusanController/create') ?>" method="post">
+                <form id="savekelas" action="<?= site_url('admin/kelasController/create') ?>" method="post">
                     <div class="row">
                         <div class="form-group col-md-6">
                             <label for="jurusan">Jurusan</label>
@@ -26,13 +26,13 @@
                                 </div>
                                 <!-- <span>TKJ</span> -->
                                 <div class="form-group col-md-3">
-                                    <input type="text" class="form-control" name="classcode" id="classcode" aria-describedby="kelasHelp" value="" placeholder="-" disabled>
+                                    <input type="text" class="form-control" name="classcode" id="classcode" aria-describedby="kelasHelp" value="" placeholder="-" readonly>
                                 </div>
                                 <div class="form-group col-md-2">
                                     <input type="text" class="form-control" name="classnn" id="classnn" aria-describedby="kelasHelp" placeholder="1">
                                 </div>
                             </div>
-                            <small id="kelasHelp" class="form-text text-muted">Tulis kelas</small>
+                            <!-- <small id="kelasHelp" class="form-text text-muted">Tulis kelas</small> -->
                         </div>
                     </div>
                     <a class="btn btn-primary mx-auto text-white" id="save">Submit</a>
@@ -52,7 +52,7 @@
                     <thead class="thead-light">
                         <tr>
                             <th>#</th>
-                            <th>Kode Kelas</th>
+                            <th>Kode Jurusan</th>
                             <th>Nama Kelas</th>
                             <th>Tanggal dibuat</th>
                             <th>Aksi</th>
@@ -68,9 +68,20 @@
 <!--Row-->
 
 <script>
+    var kelas;
+
+    function reload_table() {
+        kelas.ajax.reload(null, false); //reload datatable ajax 
+    }
+
     window.onload = () => {
         $(document).ready(function() {
-            $('#dataTableHover').DataTable(); // ID From dataTable with Hover
+            kelas = $('#dataTableHover').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "ajax": "<?= site_url('admin/kelasController/get') ?>",
+
+            }); // ID From dataTable with Hover
         });
 
         var jurusan = $('#jurusan');
@@ -83,5 +94,72 @@
             var result = $(jurusan).val().split('|');
             $(classcode).val(result[1]);
         });
+
+        $(function() {
+            $('#save').click(function() {
+                var data = new FormData($('#savekelas')[0]);
+                $.ajax({
+                    type: 'post',
+                    url: '<?= site_url('admin/kelasController/create') ?>',
+                    contentType: false,
+                    processData: false,
+                    dataType: 'json',
+                    data: data,
+                    success: function(data) {
+                        // alert(data)
+                        console.log(data.status);
+                        if (data.status == true) {
+                            Swal.fire({
+                                // position: 'top-end',
+                                icon: 'success',
+                                title: 'Kelas telah disimpan',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                            reload_table();
+                        }
+                        if (data.status == false) {
+                            Swal.fire({
+                                // position: 'top-end',
+                                icon: 'error',
+                                // title: 'Harap periksa kembali',
+                                title: data.errot,
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                        }
+                    }
+                })
+
+            })
+        })
+    }
+
+    function hapus(id) {
+        Swal.fire({
+            title: 'Yakin untuk menghapus?',
+            text: "Kelas tidak dapat dihapus jika memliki siswa",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, hapus!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: "<?= site_url('admin/KelasController/delete/') ?>" + id,
+                    type: "post",
+                    dataType: "json",
+                    success: function(data) {
+                        Swal.fire(
+                            'Terhapus!',
+                            'Data kelas telah dihapus.',
+                            'success'
+                        )
+                        reload_table();
+                    }
+                })
+            }
+        })
     }
 </script>
