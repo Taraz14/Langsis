@@ -15,6 +15,7 @@
 <!-- sweet alert -->
 <script src="<?= site_url() ?>/public/admin/vendor/sweetalert2/sweetalert2.all.min.js"></script>
 <!-- <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
+<script src="<?= site_url() ?>/public/admin/vendor/inputFilter/inputFilter.js"></script>
 
 </body>
 

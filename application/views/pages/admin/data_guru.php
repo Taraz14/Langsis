@@ -8,7 +8,7 @@
                 <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#tambah_guru" id="#modalScroll" style=" float:right">Tambah Guru</button>
             </div>
             <div class="table-responsive p-3">
-                <table class="table align-items-center table-flush table-hover" id="dataTableHover">
+                <table class="table align-items-center table-flush table-hover" width="100%" id="dataTableHover">
                     <thead class="thead-light">
                         <tr>
                             <th>#</th>

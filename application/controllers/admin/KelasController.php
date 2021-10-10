@@ -16,7 +16,6 @@ class KelasController extends CI_Controller
             'content' => 'pages/admin/data_kelas',
             'head' => 'Kelas',
             'jurusan' => $this->JurusanModel->get()->result()
-
         ];
 
         $this->load->view('layouts/index', $data, FALSE);

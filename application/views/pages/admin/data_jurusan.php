@@ -33,7 +33,7 @@
                 <h6 class="m-0 font-weight-bold text-primary">Data Jurusan Sekolah</h6>
             </div>
             <div class="table-responsive p-3">
-                <table class="table align-items-center table-flush table-hover" id="dataTableHover">
+                <table class="table align-items-center table-flush table-hover" width="100%" id="dataTableHover">
                     <thead class="thead-light">
                         <tr>
                             <th>#</th>
