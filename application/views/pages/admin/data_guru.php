@@ -1,3 +1,9 @@
+<style>
+    .dataTables_scrollHeadInner,
+    .table {
+        width: 100% !important;
+    }
+</style>
 <div class="row">
 
     <!-- DataTable with Hover -->
@@ -8,7 +14,7 @@
                 <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#tambah_guru" id="#modalScroll" style=" float:right">Tambah Guru</button>
             </div>
             <div class="table-responsive p-3">
-                <table class="table align-items-center table-flush table-hover" width="100%" id="dataTableHover">
+                <table class="table align-items-center table-flush table-hover nowrap" width="100%" id="dataTableHover">
                     <thead class="thead-light">
                         <tr>
                             <th>#</th>
@@ -78,6 +84,7 @@
             guru = $('#dataTableHover').DataTable({
                 "processing": true,
                 "serverSide": true,
+                "scrollX": true,
                 "ajax": "<?= site_url('admin/GuruController/get') ?>",
 
             }); // ID From dataTable with Hover

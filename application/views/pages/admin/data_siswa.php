@@ -1,3 +1,9 @@
+<style>
+    .dataTables_scrollHeadInner,
+    .table {
+        width: 100% !important;
+    }
+</style>
 <div class="row">
 
     <!-- DataTable with Hover -->
@@ -135,7 +141,7 @@
             siswa = $('#dataTableHover').DataTable({
                 "processing": true,
                 "serverSide": true,
-                "scrollX": true,
+                // "scrollX": "200 px",
                 "ajax": "<?= site_url('admin/siswaController/get') ?>",
 
             }); // ID From dataTable with Hover
