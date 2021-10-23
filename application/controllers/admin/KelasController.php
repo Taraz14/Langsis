@@ -8,6 +8,20 @@ class KelasController extends CI_Controller
         parent::__construct();
         //Do your magic here
         $this->load->model(array('JurusanModel', 'KelasModel'));
+        $this->isSingIn();
+    }
+
+    /**
+     * Check apakah admin sudah login ?
+     * 
+     * @return boolean|void
+     */
+    private function isSingIn()
+    {
+        if ($this->session->isLoggon && $this->session->isAdmin) {
+            return true;
+        }
+        redirect('logout', 'refresh');
     }
 
     public function index()

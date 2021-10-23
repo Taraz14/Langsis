@@ -42,6 +42,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
 $autoload['packages'] = array();
 
 /*
+ -------------------------------------------------------------------
+ Auto-load ion_auth
+ -------------------------------------------------------------------
+ ion_auth
+ */
+// $autoload['packages'] = array(APPPATH . 'third_party/ion_auth');
+
+
+/*
 | -------------------------------------------------------------------
 |  Auto-load Libraries
 | -------------------------------------------------------------------
@@ -89,7 +98,7 @@ $autoload['drivers'] = array();
 |
 |	$autoload['helper'] = array('url', 'file');
 */
-$autoload['helper'] = array('url', 'file', 'form');
+$autoload['helper'] = array('url', 'file', 'form', 'system', 'cookie');
 
 /*
 | -------------------------------------------------------------------

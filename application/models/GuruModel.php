@@ -12,6 +12,7 @@ class GuruModel extends CI_Model
     private function queryGuru()
     {
         $this->db->select('*')->from('users');
+        $this->db->where('users_role', '55');
 
         if ($this->input->get('search')['value']) {
             $this->db->like('users_nip', $this->input->get('search')['value']);

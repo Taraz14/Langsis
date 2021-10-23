@@ -10,8 +10,22 @@ class JurusanController extends CI_Controller
         $this->load->helper('string');
         //load model
         $this->load->model('JurusanModel');
+
+        $this->isSingIn();
     }
 
+    /**
+     * Check apakah admin sudah login ?
+     * 
+     * @return boolean|void
+     */
+    private function isSingIn()
+    {
+        if ($this->session->isLoggon && $this->session->isAdmin) {
+            return true;
+        }
+        redirect('logout', 'refresh');
+    }
 
     public function index()
     {

@@ -10,8 +10,21 @@ class GuruController extends CI_Controller
         $this->load->helper('string');
         //Do your magic here
         $this->load->model('GuruModel');
+        $this->isSingIn();
     }
 
+    /**
+     * Check apakah admin sudah login ?
+     * 
+     * @return boolean|void
+     */
+    private function isSingIn()
+    {
+        if ($this->session->isLoggon && $this->session->isAdmin) {
+            return true;
+        }
+        redirect('logout', 'refresh');
+    }
 
     public function index()
     {
@@ -43,7 +56,8 @@ class GuruController extends CI_Controller
                 'users_nip' => $input['nip'],
                 'users_nama' => $input['nama'],
                 'users_username' => $input['nip'],
-                'users_password' => $input['nip'],
+                // 'users_password' => $input['nip'],
+                'users_password' => hash('sha512', $input['nip'] . config_item('encryption_key')),
                 'users_role' => 55,
                 'created_at' => date("Y-m-d H:i:s")
             );

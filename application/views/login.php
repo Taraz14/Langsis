@@ -41,22 +41,30 @@
                                         </div>
                                         <h1 class="h4 text-gray-900 mb-4">Selamat datang di <strong>Langsis SMK</strong></h1>
                                     </div>
-                                    <form class="user">
+                                    <?= $this->session->flashdata('failed') ?>
+                                    <form class="user" method="post" action="<?= site_url('authController/login') ?>">
                                         <div class="input-group form-group">
-                                            <input type="text" class="form-control" name="username" id="username" placeholder="username">
+                                            <input type="text" class="form-control" name="username" id="username" placeholder="username" value="<?php echo get_cookie('loginId'); ?>">
                                             <div class="input-group-append">
                                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
                                             </div>
                                         </div>
                                         <div class="input-group form-group">
-                                            <input type="password" class="form-control" name="password" id="password" placeholder="password">
+                                            <input type="password" class="form-control" name="password" id="password" placeholder="password" value="<?php echo get_cookie('loginPass'); ?>">
                                             <div class="input-group-append">
                                                 <span class="input-group-text"><i class="fas fa-key"></i></span>
                                             </div>
                                         </div>
+                                        <div class="form-group">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" name="remember" id="remember" <?php echo get_cookie('remember') ? 'checked="checked"' : ''; ?>>
+                                                <label class="custom-control-label" for="remember">Ingat saya</label>
+                                            </div>
+                                        </div>
                                         <hr>
                                         <div class="form-group">
-                                            <a href="index.html" class="btn btn-primary btn-block">Masuk</a>
+                                            <!-- <a href="<?= site_url('login'); ?>" class="btn btn-primary btn-block">Masuk</a> -->
+                                            <button type="submit" class="btn btn-primary btn-block">Masuk</button>
                                         </div>
                                     </form>
                                     <div class="text-center">

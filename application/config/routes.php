@@ -52,6 +52,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
 $route['default_controller'] = 'AuthController';
 $route['dashboard'] = 'HomeController';
 
+$route['profile'] = 'Profile';
+
+/**
+ * Authentication
+ */
+$route['login'] = 'AuthController';
+$route['logout'] = 'AuthController/logout';
+
 /**
  * Admin Route
  */
@@ -59,7 +67,13 @@ $route['0/jurusan'] = 'admin/JurusanController';
 $route['0/kelas'] = 'admin/KelasController';
 $route['0/siswa'] = 'admin/SiswaController';
 $route['0/guru'] = 'admin/GuruController';
+$route['0/pelanggaran'] = 'admin/Pelanggaran';
 
+/**
+ * Guru Route
+ */
+$route['1/data-siswa'] = 'guru/SiswaController';
+$route['1/pelanggaran'] = 'guru/Pelanggaran';
 
 
 $route['404_override'] = '';

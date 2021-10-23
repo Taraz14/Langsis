@@ -5,7 +5,6 @@
     }
 </style>
 <div class="row">
-
     <!-- DataTable with Hover -->
     <div class="col-lg-12">
         <div class="card mb-4">
