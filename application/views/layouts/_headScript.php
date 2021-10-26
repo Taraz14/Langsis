@@ -12,7 +12,10 @@
     <link href="<?= base_url() ?>/public/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="<?= base_url() ?>/public/admin/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="<?= base_url() ?>/public/admin/css/ruang-admin.min.css" rel="stylesheet">
+    <!-- <link href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" rel="stylesheet"> -->
     <link href="<?= base_url() ?>/public/admin/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/rowreorder/1.2.8/css/rowReorder.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css" rel="stylesheet">
     <link href="<?= base_url() ?>/public/admin/vendor/sweetalert2/sweetalert2.min.css" rel="stylesheet">
     <style>
         #save,

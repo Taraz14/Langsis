@@ -14,7 +14,7 @@
           <div class="sidebar-brand-text mx-3">Langsis <br />SMK</div>
       </a>
       <div class="sidebar-heading mb-3 mt-3">
-          status :<span style="color:black !important"> <?= $this->session->userdata('role') == 99 ? 'Admin' : 'Guru' ?></span>
+          status :<span style="color:black !important"> Aktif</span>
           <span class="badge badge-success float-right">Online</span>
       </div>
       <hr class="sidebar-divider my-0">

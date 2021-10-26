@@ -11,6 +11,11 @@ class KelasModel extends CI_Model
         return $this->db->insert('kelas', $data);
     }
 
+    public function getKelas()
+    {
+        return $this->db->get('kelas');
+    }
+
     public function get($id)
     {
         return $this->db->get_where('kelas', ['jurusan_id' => $id]);

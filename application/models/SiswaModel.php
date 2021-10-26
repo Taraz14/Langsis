@@ -22,43 +22,84 @@ class SiswaModel extends CI_Model
 
 
     //Query Datatable loaded
-    private function querySiswa()
+    function getSiswa($postData = null)
     {
-        $this->db->select('*')->from('siswa s');
 
-        if ($this->input->get('search')['value']) {
-            $this->db->like('Siswa_nis', $this->input->get('search')['value']);
-            $this->db->or_like('Siswa_nama', $this->input->get('search')['value']);
+        $response = array();
+
+        ## Read value
+        $draw = $postData['draw'];
+        $start = $postData['start'];
+        $rowperpage = $postData['length']; // Rows display per page
+        $columnIndex = $postData['order'][0]['column']; // Column index
+        $columnName = $postData['columns'][$columnIndex]['data']; // Column name
+        $columnSortOrder = $postData['order'][0]['dir']; // asc or desc
+        $searchValue = $postData['search']['value']; // Search value
+
+        // Custom search filter 
+        $searchKelas = $postData['searchKelas'];
+
+        ## Search 
+        $search_arr = array();
+        $searchQuery = "";
+
+        if ($searchValue != '') {
+            $search_arr[] = " (siswa_nama like '%" . $searchValue . "%' or 
+                siswa_nis like '%" . $searchValue . "%' or 
+                siswa_telepon like'%" . $searchValue . "%' ) ";
         }
-        if ($this->input->get('order')) {
-            $this->db->order_by(
-                $this->input->get('order')['0']['column'],
-                $this->input->get('order')['0']['dir']
+
+        if ($searchKelas != '') {
+            $search_arr[] = " kelas_id='" . $searchKelas . "' ";
+        }
+        if (count($search_arr) > 0) {
+            $searchQuery = implode(" and ", $search_arr);
+        }
+
+        ## Total number of records without filtering
+        $this->db->select('count(*) as allcount');
+        $records = $this->db->get('siswa')->result();
+        $totalRecords = $records[0]->allcount;
+
+        ## Total number of record with filtering
+        $this->db->select('count(*) as allcount');
+        if ($searchQuery != '')
+            $this->db->where($searchQuery);
+        $records = $this->db->get('siswa')->result();
+        $totalRecordwithFilter = $records[0]->allcount;
+
+        ## Fetch records
+        $this->db->select('*');
+        if ($searchQuery != '')
+            $this->db->where($searchQuery);
+        $this->db->order_by($columnName, $columnSortOrder);
+        $this->db->limit($rowperpage, $start);
+        $records = $this->db->get('siswa')->result();
+
+        $data = array();
+
+        $no = 1;
+        foreach ($records as $jval) {
+
+            $data[] = array(
+                'siswa_id' =>  $no++,
+                'siswa_nis' => $jval->siswa_nis,
+                'siswa_nama' => $jval->siswa_nama,
+                'created_at' => date("d F Y", strtotime($jval->created_at)),
+                'updated_at' => date("H:i", strtotime($jval->created_at)) . ' WIT',
+                'aksi'  => '<button type="button" class="btn btn-danger btn-sm text-white link" data-toggle="modal" data-target="#laporkan" id="#modalScroll"><i class="fa fa-gavel"></i> Laporkan</button>'
             );
-        } else {
-            $this->db->order_by('s.siswa_id', 'desc');
         }
-    }
 
-    public function dataSiswa()
-    {
-        self::querySiswa();
-        if ($this->input->get('length') !== -1) {
-            $this->db->limit($this->input->get('length'), $this->input->get('start'));
-        }
-        return $this->db->get()->result();
-    }
+        ## Response
+        $response = array(
+            "draw" => intval($draw),
+            "iTotalRecords" => $totalRecords,
+            "iTotalDisplayRecords" => $totalRecordwithFilter,
+            "aaData" => $data
+        );
 
-    public function filtered()
-    {
-        self::querySiswa();
-        return $this->db->get()->num_rows();
-    }
-
-    public function countAll()
-    {
-        $this->db->from('siswa');
-        return $this->db->count_all_results();
+        return $response;
     }
     //!--End of Query datatable loaded
 }

@@ -23,6 +23,7 @@ class Auth_d_model extends CI_Model
                     'nama'          => $row->users_nama,
                     'iduser'          => $row->users_id,
                     'role'              => $row->users_role,
+                    'rolename'          => $row->users_role == 99 ? 'Administrator' : 'Guru',
                     'status'         => $row->users_status,
                     'isLoggon'     => true,
                     'isAdmin'       => $row->users_role == 99 ? true : false,

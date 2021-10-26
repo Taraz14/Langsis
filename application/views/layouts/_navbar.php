@@ -4,6 +4,13 @@
                 <i class="fa fa-bars"></i>
             </button>
             <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown no-arrow">
+                    <a style="cursor:auto" class="nav-link dropdown-toggle">
+                        <span class="ml-2 d-none d-lg-inline text-white small">
+                            <?= $this->session->userdata('rolename') ?>
+                        </span>
+                    </a>
+                </li>
                 <!-- <li class="nav-item dropdown no-arrow">
                     <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-search fa-fw"></i>
@@ -21,7 +28,7 @@
                         </form>
                     </div>
                 </li>
-                <li class="nav-item dropdown no-arrow mx-1">
+                 <li class="nav-item dropdown no-arrow mx-1">
                     <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-bell fa-fw"></i>
                         <span class="badge badge-danger badge-counter">3+</span>
@@ -180,7 +187,7 @@
                 <!-- Guru -->
                 <?php if ($this->session->userdata('role') == 55) : ?>
                     <li class="nav-item dropdown no-arrow">
-                        <a class="nav-link dropdown-toggle" href="<?= site_url('profile') ?>">
+                        <a class="nav-link dropdown-toggle" href="#">
                             <img class="img-profile rounded-circle" src="<?= base_url() ?>/public/admin/img/boy.png" style="max-width: 60px">
                             <span class="ml-2 d-none d-lg-inline text-white small">
                                 <?php
