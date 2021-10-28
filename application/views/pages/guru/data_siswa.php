@@ -26,6 +26,7 @@
                             <!-- <label for="kelas">Kelas</label> -->
                             <select class="form-control form-control-sm mb-3" id="searchkelas">
                                 <option value="" hidden>Kelas</option>
+                                <option value="">--Semua Kelas--</option>
                                 <?php foreach ($kelas as $val) : ?>
                                     <option value="<?= $val->kelas_id ?>"><?= $val->kelas_nama ?></option>
                                 <?php endforeach; ?>
@@ -35,7 +36,7 @@
                 </table>
 
                 <table class="table align-items-center table-flush table-hover display nowrap" width="100%" id="dataTableHover">
-                    <thead class="thead-light">
+                    <thead class="thead-dark">
                         <tr>
                             <th>#</th>
                             <th>NIS</th>
@@ -67,7 +68,7 @@
     <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="laporkan">
+                <h5 class="modal-title">
                     <span><i class="fa fa-gavel"></i> Laporkan</span>
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -75,25 +76,33 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="formGuru" action="" method="post">
+                <form id="formPelanggaran" action="" method="post">
+                    <div class="form-group">
+                        <label for="nama">Nama Siswa</label>
+                        <input type="text" class="form-control form-control-sm" id="sis-nama" value="" disabled />
+                        <input type="hidden" class="form-control form-control-sm" name="sis-id" id="sis-id" value="" />
+                    </div>
                     <div class="form-group">
                         <label for="kp">Kriteria Pelanggaran</label>
                         <select class="form-control" name="kp" id="kp">
                             <option value="">--Pilih Kriteria--</option>
+                            <?php foreach ($kriteria as $value) : ?>
+                                <option value="<?= $value->kriteria_id ?>"><?= $value->kriteria_nama ?></option>
+                            <?php endforeach; ?>
                         </select>
                         <small id="kpHelp" class="form-text text-muted">Kriteria pelanggaran mengandung bobot total 100%</small>
                     </div>
                     <div class="form-group">
-                        <label for="ktpel">kategori Pelanggaran</label>
-                        <select class="form-control" name="ktpel" id="ktpel">
-                            <option value="">--Pilih Kategori--</option>
+                        <label for="jp">Jenis Pelanggaran</label>
+                        <select class="form-control" name="jp" id="jp">
+                            <option value="">--Pilih Jenis Pelanggaran--</option>
                         </select>
-                        <small id="ktpelHelp" class="form-text text-muted">Kategori pelanggaran memiliki nilai masing-masing</small>
+                        <small id="jplHelp" class="form-text text-muted">Jenis pelanggaran memiliki nilai masing-masing</small>
                     </div>
                     <div class="form-group">
-                        <label for="deskripsi">Deskripsi Pelanggaran</label>
+                        <label for="deskripsi">Deskripsi Pelanggaran (Optional)</label>
                         <textarea type="text" class="form-control" name="deskripsi" id="deskripsi" placeholder="Masukkan Deskripsi"></textarea>
-                        <small id="deskripsiHelp" class="form-text text-muted">Deskripsi Pelanggaran</small>
+                        <small id="deskripsiHelp" class="form-text text-muted">Jika ada, jabarkan pelanggaran yang dilakukan oleh siswa</small>
                     </div>
                 </form>
             </div>
@@ -116,7 +125,17 @@
         siswa.ajax.reload(null, false); //reload datatable ajax 
     }
 
+    function openModal(id) {
+        // Modal
+        var result = id.split(',');
+        $('#sis-nama').val(result[1]);
+        $('#sis-id').val(result[0]);
+        $('#laporkan').modal('show');
+        // --Modal--
+    }
+
     window.onload = () => {
+
         $("#telepon").inputFilter(function(value) {
             return /^\d*$/.test(value) && (value === "" || parseInt(value.length) <= 13);
         });
@@ -171,14 +190,36 @@
             });
         });
 
+        //Select option jenis pelanggaran berdasarkan Kriteria
+        $('#kp').change(function() {
+            var id = $('#kp').val();
+            $.ajax({
+                type: 'post',
+                url: '<?= site_url('guru/siswaController/get_jp/') ?>' + id,
+                async: true,
+                dataType: 'json',
+                data: {
+                    id: id
+                },
+                success: function(data) {
+                    var html = '';
+                    var i;
+                    for (i = 0; i < data.length; i++) {
+                        html += '<option value=' + data[i].jp_id + '>' + data[i].jp_nama + '</option>';
+                    }
+                    $('#jp').html(html);
+                }
+            })
+            return false;
+        })
 
 
         $(function() {
             $('#save').click(function() {
-                var data = new FormData($('#formsiswa')[0]);
+                var data = new FormData($('#formPelanggaran')[0]);
                 $.ajax({
                     type: 'post',
-                    url: '<?= site_url('guru/siswaController/create') ?>',
+                    url: '<?= site_url('guru/pelanggaran/create') ?>',
                     contentType: false,
                     processData: false,
                     dataType: 'json',
@@ -190,7 +231,7 @@
                             Swal.fire({
                                 // position: 'top-end',
                                 icon: 'success',
-                                title: 'siswa berhasil disimpan',
+                                title: 'siswa berhasil dilaporkan',
                                 showConfirmButton: false,
                                 timer: 1500
                             })

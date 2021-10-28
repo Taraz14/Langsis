@@ -67,7 +67,8 @@ $route['0/jurusan'] = 'admin/JurusanController';
 $route['0/kelas'] = 'admin/KelasController';
 $route['0/siswa'] = 'admin/SiswaController';
 $route['0/guru'] = 'admin/GuruController';
-$route['0/pelanggaran'] = 'admin/Pelanggaran';
+$route['0/pelanggaran'] = 'admin/PelanggaranController';
+$route['0/detail-pelanggaran'] = 'admin/Detail_pelanggaranController';
 
 /**
  * Guru Route

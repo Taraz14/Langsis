@@ -54,7 +54,7 @@
                   </div>
               </div>
           </li>
-          <li class="nav-item <?= $segment == 'pelanggaran' ? 'active' : '' ?>">
+          <li class="nav-item <?= ($segment == 'pelanggaran') || ($segment == 'detail-pelanggaran') ? 'active' : '' ?>">
               <a class="nav-link" href="<?= site_url('0/pelanggaran') ?>">
                   <i class="fas fa-fw fa-gavel"></i>
                   <span>Pelanggaran</span>

@@ -7,7 +7,7 @@ class SiswaController extends CI_Controller
     {
         parent::__construct();
         //Do your magic here
-        $this->load->model(array('SiswaModel', 'JurusanModel', 'KelasModel'));
+        $this->load->model(array('SiswaModel', 'JurusanModel', 'KelasModel', 'PelanggaranModel'));
 
         $this->isSingIn();
     }
@@ -32,7 +32,9 @@ class SiswaController extends CI_Controller
             'head' => 'Siswa',
             'jurusan' => $this->JurusanModel->get()->result(),
             'kelas' => $this->KelasModel->getKelas()->result(),
-            'agama' => $this->db->get('agama')->result()
+            'agama' => $this->db->get('agama')->result(),
+            'kriteria' => $this->db->get('kriteria')->result(),
+            'jp'        => $this->db->get('jenis_pelanggaran')->result()
         ];
 
         $this->load->view('layouts/index', $data, FALSE);
@@ -44,37 +46,10 @@ class SiswaController extends CI_Controller
         echo json_encode($dataKelas, TRUE);
     }
 
-    /**
-     * Create Siswa
-     * String @param array
-     */
-    public function create()
+    public function get_jp($id)
     {
-        $validation = $this->form_validation;
-        $validation->set_rules('nis', 'NIS', 'required|is_unique[siswa.siswa_nis]');
-        $validation->set_rules('nama', 'Nama', 'required');
-        $validation->set_rules('alamat', 'Alamat', 'required');
-        $validation->set_rules('religion', 'Agama', 'required');
-        $validation->set_message('is_unique', '%s sudah ada');
-        if ($validation->run() == FALSE) {
-            echo validation_errors();
-            die();
-            // echo json_encode(['status' => FALSE, 'errot' => 'Tidak dapat menambahkan, periksa kembali']);
-        } else {
-            $input = $this->input->post();
-            $data = array(
-                'siswa_nis' => $input['nis'],
-                'kelas_id' => $input['kelas'],
-                'siswa_nama' => $input['nama'],
-                'siswa_alamat' => $input['alamat'],
-                'siswa_gender' => $input['gender'],
-                'siswa_agama' => $input['religion'],
-                'siswa_telepon' => $input['telepon'],
-                'created_at' => date("Y-m-d H:i:s")
-            );
-            $this->SiswaModel->save($data);
-            echo json_encode(['status' => TRUE]);
-        }
+        $dataPelanggaran = $this->db->get_where('jenis_pelanggaran', ['kriteria_id' => $id])->result();
+        echo json_encode($dataPelanggaran, TRUE);
     }
 
     /**

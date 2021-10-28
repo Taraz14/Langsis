@@ -80,15 +80,28 @@ class SiswaModel extends CI_Model
 
         $no = 1;
         foreach ($records as $jval) {
-
-            $data[] = array(
-                'siswa_id' =>  $no++,
-                'siswa_nis' => $jval->siswa_nis,
-                'siswa_nama' => $jval->siswa_nama,
-                'created_at' => date("d F Y", strtotime($jval->created_at)),
-                'updated_at' => date("H:i", strtotime($jval->created_at)) . ' WIT',
-                'aksi'  => '<button type="button" class="btn btn-danger btn-sm text-white link" data-toggle="modal" data-target="#laporkan" id="#modalScroll"><i class="fa fa-gavel"></i> Laporkan</button>'
-            );
+            $id = $jval->siswa_id;
+            $nama = $jval->siswa_nama;
+            if ($this->session->userdata('role') == 55) :
+                $data[] = array(
+                    'siswa_id' =>  $no++,
+                    'siswa_nis' => $jval->siswa_nis,
+                    'siswa_nama' => $jval->siswa_nama,
+                    'created_at' => date("d F Y", strtotime($jval->created_at)),
+                    'updated_at' => date("H:i", strtotime($jval->created_at)) . ' WIT',
+                    'aksi'  => '<a href="#" class="btn btn-danger btn-sm text-white link laporkan-mod" onclick="openModal(' . "'" . $id . ',' . $nama . "'" . ')" data-toggle="modal"><i class="fa fa-gavel"></i> Laporkan</a>'
+                );
+            endif;
+            if ($this->session->userdata('role') == 99) :
+                $data[] = array(
+                    'siswa_id' =>  $no++,
+                    'siswa_nis' => $jval->siswa_nis,
+                    'siswa_nama' => $jval->siswa_nama,
+                    'created_at' => date("d F Y", strtotime($jval->created_at)),
+                    'updated_at' => date("H:i", strtotime($jval->created_at)) . ' WIT',
+                    'aksi'  => '<a href="javascript:void(0)" onclick="hapus(' . "'" . $jval->siswa_id . "'" . ')" class="btn btn-danger btn-sm text-white link"><i class="fa fa-trash"></i></a>'
+                );
+            endif;
         }
 
         ## Response

@@ -19,6 +19,8 @@
     <link href="<?= base_url() ?>/public/admin/vendor/sweetalert2/sweetalert2.min.css" rel="stylesheet">
     <style>
         #save,
+        #saveBobot,
+        #savePelanggaran,
         .link {
             cursor: -webkit-grab;
             cursor: pointer;

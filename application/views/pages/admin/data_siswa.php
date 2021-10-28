@@ -13,6 +13,28 @@
                 <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#tambah_siswa" id="#modalScroll" style=" float:right">Tambah Siswa</button>
             </div>
             <div class="table-responsive p-3">
+                <table width="50%">
+                    <tr>
+                        <!-- <td width="30%">
+                            <select class="form-control form-control-sm mb-3" id="searchjurusan">
+                                <option hidden>Jurusan</option>
+                                <?php foreach ($jurusan as $val) : ?>
+                                    <option value="<?= $val->jurusan_id ?>"><?= $val->jurusan_kode ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </td> -->
+                        <td width="20%">
+                            <!-- <label for="kelas">Kelas</label> -->
+                            <select class="form-control form-control-sm mb-3" id="searchkelas">
+                                <option value="" hidden>Kelas</option>
+                                <option value="">--Semua Kelas--</option>
+                                <?php foreach ($kelas as $val) : ?>
+                                    <option value="<?= $val->kelas_id ?>"><?= $val->kelas_nama ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
                 <table class="table align-items-center table-flush table-hover nowrap" width="100%" id="dataTableHover">
                     <thead class="thead-light">
                         <tr>
@@ -138,14 +160,49 @@
         //datatables
         $(document).ready(function() {
             siswa = $('#dataTableHover').DataTable({
-                "processing": true,
-                "serverSide": true,
-                // "scrollX": "200 px",
-                "ajax": "<?= site_url('admin/siswaController/get') ?>",
+                rowReorder: {
+                    selector: 'td:nth-child(2)'
+                },
+                info: false,
+                // searching: false,
+                responsive: true,
+                processing: true,
+                serverSide: true,
+                serverMethod: "post",
+                ajax: {
+                    url: "<?= site_url('admin/siswaController/get') ?>",
+                    data: function(data) {
+                        var kelas = $('#searchkelas').val();
+                        data.searchKelas = kelas;
+                        // console.log(data.searchKelas);
+                    }
+                },
+                columns: [{
+                        data: "siswa_id"
+                    },
+                    {
+                        data: "siswa_nis"
+                    },
+                    {
+                        data: "siswa_nama"
+                    },
+                    {
+                        data: "created_at"
+                    },
+                    {
+                        data: "updated_at"
+                    },
+                    {
+                        data: "aksi"
+                    }
+                ],
 
-            }); // ID From dataTable with Hover
+            });
+
+            $("#searchkelas").change(function() {
+                siswa.draw();
+            });
         });
-
         //Select option kelas berdasarkan jurusan
         $('#jurusan').change(function() {
             var id = $('#jurusan').val();
