@@ -47,9 +47,7 @@ class Pelanggaran extends CI_Controller
         $validation->set_rules('jp', 'Jenis Pelanggaran', 'required');
         $validation->set_rules('kp', 'Kriteria Pelanggaran', 'required');
         if ($validation->run() == FALSE) {
-            echo validation_errors();
-            die();
-            // echo json_encode(['status' => FALSE, 'errot' => 'Tidak dapat menambahkan, periksa kembali']);
+            echo json_encode(['status' => FALSE, 'errot' => 'Tidak dapat menambahkan, periksa kembali']);
         } else {
             $input = $this->input->post();
 

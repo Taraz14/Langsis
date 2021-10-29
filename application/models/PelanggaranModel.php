@@ -91,7 +91,7 @@ class PelanggaranModel extends CI_Model
     {
         $users_id = $this->session->userdata('uid');
         $users_role = $this->session->userdata('role');
-        $this->db->select('*, p.created_at as pcreate, p.updated_at as pupdate, p.siswa_id as sid')
+        $this->db->select('*, SUM(p.poin) as topskor, p.created_at as pcreate, p.updated_at as pupdate, p.siswa_id as sid')
             ->from($this->pelanggaran . ' p')
             ->join($this->jp . ' jp', 'p.jp_id = jp.jp_id', 'left')
             ->join($this->kp . ' kp', 'p.kriteria_id = kp.kriteria_id', 'left')
@@ -99,7 +99,6 @@ class PelanggaranModel extends CI_Model
             ->join($this->kelas . ' k', 's.kelas_id = k.kelas_id', 'inner')
             ->join($this->users . ' u', 'p.users_id = u.users_id', 'left');
         $this->db->group_by('s.siswa_id');
-
         if ($users_role == 55) :
             $this->db->where('p.users_id', $users_id);
         endif;

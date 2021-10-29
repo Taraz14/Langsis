@@ -92,17 +92,37 @@ class PelanggaranController extends CI_Controller
         $no = 1;
         foreach ($data as $value) {
 
-            $normalisasi = $value->bobot_kriteria / 100;
-            $poinTot = $value->jp_skor * $normalisasi;
-            // $hasil = array_sum($poinTot);
+            //Rules (Sanksi)
+            $huruf = "";
+            $keputusan = "";
+            $skor = 0;
+            $skor = $value->topskor;
+            if ($skor <= 5) {
+                $huruf = "A";
+                $keputusan = '<span class="badge badge-success">Dibina</span>';
+            } else if ($skor >= 6 && $skor <= 24) {
+                $huruf = "B";
+                $keputusan = '<span class="badge badge-primary">Diingatkan sampai 3 kali</span>';
+            } else if ($skor >= 25 && $skor <= 74) {
+                $huruf = "C";
+                $keputusan = '<span class="badge badge-warning">Diskors 3 Hari</span>';
+            } else if ($skor >= 73 && $skor <= 99) {
+                $huruf = "D";
+                $keputusan = '<span class="badge badge-danger">Diskors 6 Hari</span>';
+            } else if ($skor >= 100) {
+                $huruf = "E";
+                $keputusan = '<span class="badge badge-secondary">Dikeluarkan</span>';
+            }
 
             $temp = [];
             $temp[] = htmlspecialchars($no++, ENT_QUOTES, 'UTF-8');
             $temp[] = htmlspecialchars($value->siswa_nis, ENT_QUOTES, 'UTF-8');
             $temp[] = htmlspecialchars($value->siswa_nama, ENT_QUOTES, 'UTF-8');
             $temp[] = htmlspecialchars($value->users_nama, ENT_QUOTES, 'UTF-8');
+            $temp[] = '<strong>' . $skor . '</strong>';
+            $temp[] = '<strong>' . $huruf . '</strong>';
+            $temp[] = $keputusan;
             $temp[] = htmlspecialchars(date("d F Y / H:i", strtotime($value->pcreate)), ENT_QUOTES, 'UTF-8');
-            $temp[] = $poinTot;
             if ($value->request_hapus == 0) :
                 $temp[] = '<a href="javascript:void(0)" onclick="detail(' . "'" . $value->sid . "'" . ')"  class="btn btn-success btn-sm text-white link"><i class="fa fa-eye"></i> Detail Pelanggar</a>';
             endif;

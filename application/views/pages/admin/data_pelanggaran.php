@@ -32,8 +32,10 @@
                             <th>NIS</th>
                             <th>Nama siswa</th>
                             <th>Guru Pelapor</th>
-                            <th>Tanggal & Wwaktu dibuat</th>
                             <th>Total Poin</th>
+                            <th>Huruf</th>
+                            <th>Keputusan</th>
+                            <th>Tanggal & Waktu dibuat</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
