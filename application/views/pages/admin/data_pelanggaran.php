@@ -25,8 +25,8 @@
                         </td>
                     </tr>
                 </table>
-                <table class="table align-items-center table-flush table-hover nowrap" width="100%" id="dataTableHover">
-                    <thead class="thead-light">
+                <table class="table align-items-center table-flush table-hover" width="100%" id="dataTableHover">
+                    <thead class="thead-dark">
                         <tr>
                             <th>#</th>
                             <th>NIS</th>
@@ -134,7 +134,61 @@
     </div>
 </div>
 
+<!-- Modal Scrollable Detail Pelanggar -->
+<div class="modal fade" id="pelanggar-modal" tabindex="-1" role="dialog" aria-labelledby="pelanggar-modal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="pelanggar-modal">
+                    <span><i class="fa fa-deaf"></i> Detail Pelanggar</span>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formPelanggaran" action="<?= site_url('admin/siswaController/create') ?>" method="post">
+                    <div class="form-group">
+                        <label for="kp">Kriteria Pelanggaran</label>
+                        <select class="form-control" name="kp" id="kp">
+                            <option value="">--Pilih Kriteria--</option>
+                            <?php foreach ($kriteria as $value) : ?>
+                                <option value="<?= $value->kriteria_id ?>"><?= $value->kriteria_nama ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                        <small id="kpHelp" class="form-text text-muted">Kriteria pelanggaran mengandung bobot total 100%</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="pelanggaran">Nama Pelanggaran</label>
+                        <input type="text" class="form-control" name="pelanggaran" id="pelanggaran" aria-describedby="pelanggaranHelp" placeholder="Masukkan pelanggaran">
+                        <small id="pelanggaranHelp" class="form-text text-muted">pelanggaran</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="point">Point</label>
+                        <input type="text" class="form-control" name="point" id="point" aria-describedby="pointHelp" placeholder="Masukkan point">
+                        <small id="pointHelp" class="form-text text-muted">Point max 100</small>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">
+                    Tutup <span><i class="fa fa-times"></i></span>
+                </button>
+                <a class="btn btn-success text-white" id="savePelanggaran">
+                    Simpan <span><i class="fa fa-save"></i></span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
+    var pelanggaran;
+
+    function reload_table() {
+        pelanggaran.ajax.reload(null, false); //reload datatable ajax 
+    }
+
     window.onload = () => {
         $("#bobot").inputFilter(function(value) {
             return /^\d*$/.test(value) && (value === "" || parseInt(value.length) <= 3);
@@ -155,9 +209,9 @@
         //datatables
         $(document).ready(function() {
             pelanggaran = $('#dataTableHover').DataTable({
-                // "processing": true,
-                // "serverSide": true,
-                // "ajax": "<?= site_url('admin/siswaController/get') ?>",
+                "processing": true,
+                "serverSide": true,
+                "ajax": "<?= site_url('admin/PelanggaranController/get') ?>",
 
                 buttons: [
                     'copyHtml5',
@@ -244,6 +298,66 @@
                 })
 
             })
+        })
+    }
+
+    function detail(id) {
+        $('#pelanggar-modal').modal('show');
+    }
+
+    function hapus(id) {
+        Swal.fire({
+            title: 'Yakin untuk membatalkan laporan?',
+            // text: "siswa yang dihapus tidak akan dapat mengakses aplikasi LANGSIS",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Oke!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: "<?= site_url('admin/pelanggaranController/delete/') ?>" + id,
+                    type: "post",
+                    dataType: "json",
+                    success: function(data) {
+                        Swal.fire(
+                            'Terkirim!',
+                            'Menunggu admin untuk melakukan penghapusan.',
+                            'success'
+                        )
+                        reload_table();
+                    }
+                })
+            }
+        })
+    }
+
+    function tolak(id) {
+        Swal.fire({
+            title: 'Tolak Request?',
+            // text: "siswa yang dihapus tidak akan dapat mengakses aplikasi LANGSIS",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Oke!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: "<?= site_url('admin/pelanggaranController/tolak/') ?>" + id,
+                    type: "post",
+                    dataType: "json",
+                    success: function(data) {
+                        Swal.fire(
+                            'Terkirim!',
+                            'Berhasil ditolak.',
+                            'success'
+                        )
+                        reload_table();
+                    }
+                })
+            }
         })
     }
 </script>

@@ -42,7 +42,7 @@
     var pelanggaran;
 
     function reload_table() {
-        siswa.ajax.reload(null, false); //reload datatable ajax 
+        pelanggaran.ajax.reload(null, false); //reload datatable ajax 
     }
 
     window.onload = () => {

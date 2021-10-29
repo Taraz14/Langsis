@@ -91,12 +91,14 @@ class PelanggaranModel extends CI_Model
     {
         $users_id = $this->session->userdata('uid');
         $users_role = $this->session->userdata('role');
-        $this->db->select('*, p.created_at as pcreate, p.updated_at as pupdate')->from($this->pelanggaran . ' p');
-        $this->db->join($this->jp . ' jp', 'p.jp_id = jp.jp_id', 'left');
-        $this->db->join($this->kp . ' kp', 'p.kriteria_id = kp.kriteria_id', 'left');
-        $this->db->join($this->siswa . ' s', 'p.siswa_id = s.siswa_id', 'left');
-        $this->db->join($this->kelas . ' k', 's.kelas_id = k.kelas_id', 'inner');
-        $this->db->join($this->users . ' u', 'p.users_id = u.users_id', 'left');
+        $this->db->select('*, p.created_at as pcreate, p.updated_at as pupdate, p.siswa_id as sid')
+            ->from($this->pelanggaran . ' p')
+            ->join($this->jp . ' jp', 'p.jp_id = jp.jp_id', 'left')
+            ->join($this->kp . ' kp', 'p.kriteria_id = kp.kriteria_id', 'left')
+            ->join($this->siswa . ' s', 'p.siswa_id = s.siswa_id', 'left')
+            ->join($this->kelas . ' k', 's.kelas_id = k.kelas_id', 'inner')
+            ->join($this->users . ' u', 'p.users_id = u.users_id', 'left');
+        $this->db->group_by('s.siswa_id');
 
         if ($users_role == 55) :
             $this->db->where('p.users_id', $users_id);
@@ -138,7 +140,17 @@ class PelanggaranModel extends CI_Model
         return $this->db->count_all_results();
     }
 
-    public function deletereq($req, $id)
+    public function deletereq(array $req, $id)
+    {
+        return $this->db->update($this->pelanggaran, $req, $id);
+    }
+
+    public function deleteconfirmed($id)
+    {
+        return $this->db->delete($this->pelanggaran, $id);
+    }
+
+    public function tolakconnfirmed(array $req, $id)
     {
         return $this->db->update($this->pelanggaran, $req, $id);
     }

@@ -87,7 +87,7 @@
                         <select class="form-control" name="kp" id="kp">
                             <option value="">--Pilih Kriteria--</option>
                             <?php foreach ($kriteria as $value) : ?>
-                                <option value="<?= $value->kriteria_id ?>"><?= $value->kriteria_nama ?></option>
+                                <option value="<?= $value->kriteria_id . '|' . $value->bobot_kriteria ?>"><?= $value->kriteria_nama ?></option>
                             <?php endforeach; ?>
                         </select>
                         <small id="kpHelp" class="form-text text-muted">Kriteria pelanggaran mengandung bobot total 100%</small>
@@ -192,7 +192,9 @@
 
         //Select option jenis pelanggaran berdasarkan Kriteria
         $('#kp').change(function() {
-            var id = $('#kp').val();
+            var split_id = $(this).children("option:selected").val();
+            var res = $('#kp').val().split('|');
+            var id = res[0];
             $.ajax({
                 type: 'post',
                 url: '<?= site_url('guru/siswaController/get_jp/') ?>' + id,
@@ -205,7 +207,7 @@
                     var html = '';
                     var i;
                     for (i = 0; i < data.length; i++) {
-                        html += '<option value=' + data[i].jp_id + '>' + data[i].jp_nama + '</option>';
+                        html += '<option value=' + data[i].jp_id + ',' + data[i].jp_skor + '>' + data[i].jp_nama + '</option>';
                     }
                     $('#jp').html(html);
                 }
