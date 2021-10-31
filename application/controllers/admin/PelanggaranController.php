@@ -85,6 +85,19 @@ class PelanggaranController extends CI_Controller
         }
     }
 
+    public function get_detail($id)
+    {
+        $data = [
+            'content' => 'pages/admin/detail_pelanggar',
+            'head' => 'Detail Pelanggar',
+            'pelanggar' => $this->pelanggaran->get_detPelanggaran($id)->result(),
+            'tag' => $this->pelanggaran->get_detPelanggaran($id)->row(),
+            'kriteria' => $this->pelanggaran->get_kriteria()->result()
+        ];
+
+        $this->load->view('layouts/index', $data, FALSE);
+    }
+
     public function get()
     {
         $data = $this->pelanggaran->dataPelanggar();
@@ -124,10 +137,10 @@ class PelanggaranController extends CI_Controller
             $temp[] = $keputusan;
             $temp[] = htmlspecialchars(date("d F Y / H:i", strtotime($value->pcreate)), ENT_QUOTES, 'UTF-8');
             if ($value->request_hapus == 0) :
-                $temp[] = '<a href="javascript:void(0)" onclick="detail(' . "'" . $value->sid . "'" . ')"  class="btn btn-success btn-sm text-white link"><i class="fa fa-eye"></i> Detail Pelanggar</a>';
+                $temp[] = '<a href="' . site_url('0/detail-pelanggar/' . $value->sid) . '"class="btn btn-success btn-sm text-white link"><i class="fa fa-eye"></i> Detail Pelanggar</a>';
             endif;
             if ($value->request_hapus == 1) :
-                $temp[] = '<a href="javascript:void(0)" onclick="detail(' . "'" . $value->sid . "'" . ')"  class="btn btn-success btn-sm text-white link mb-2"><i class="fa fa-eye"></i> Detail</a> <a href="javascript:void(0)" onclick="tolak(' . "'" . $value->sid . "'" . ')" class="btn btn-warning btn-sm text-white link mb-2"><i class="fa fa-times"></i> Tolak</a> <a href="javascript:void(0)" onclick="hapus(' . "'" . $value->sid . "'" . ')" class="btn btn-danger btn-sm text-white link mb-1"><i class="fa fa-trash"></i> Hapus</a> ';
+                $temp[] = '<a href="javascript:void(0)" onclick="detail(' . "'" . $value->sid . "'" . ')"  class="btn btn-success btn-sm text-white link mb-2"><i class="fa fa-eye"></i> Detail</a> <a href="javascript:void(0)" onclick="tolak(' . "'" . $value->sid . "'" . ')" class="btn btn-warning btn-sm text-white link mb-2"><i class="fa fa-times"></i> Tolak</a> <a href="javascript:void(0)" onclick="hapus(' . "'" . $value->sid . "'" . ')" class="btn btn-danger btn-sm text-white link mb-1"><i class="fa fa-trash"></i> Hapus pelanggar</a> ';
             endif;
 
             $guru[] = $temp;
@@ -144,6 +157,12 @@ class PelanggaranController extends CI_Controller
     public function delete($id)
     {
         $this->pelanggaran->deleteconfirmed(['siswa_id' => $id]);
+        echo json_encode(array("status" => TRUE));
+    }
+
+    public function deletePelanggar($id)
+    {
+        $this->pelanggaran->deletePelanggar(['pelanggaran_id' => $id]);
         echo json_encode(array("status" => TRUE));
     }
 

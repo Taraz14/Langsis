@@ -15,13 +15,13 @@
                 <table width="60%" class="mb-3">
                     <tr>
                         <td>
-                            <a href="#" class="btn btn-warning btn-sm" id="kriteria"><i class="fa fa-plus"></i> Tambah Kriteria Pelanggaran</a>
+                            <a href="#" class="btn btn-secondary btn-sm" id="kriteria"><i class="fa fa-plus"></i> Tambah Kriteria Pelanggaran</a>
                         </td>
                         <td>
-                            <a href="#" class="btn btn-info btn-sm" id="sanksi"><i class="fa fa-plus"></i> Tambah Jenis Pelanggaran</a>
+                            <a href="#" class="btn btn-secondary btn-sm" id="sanksi"><i class="fa fa-plus"></i> Tambah Jenis Pelanggaran</a>
                         </td>
                         <td>
-                            <a href="<?= site_url('0/detail-pelanggaran') ?>" class="btn btn-danger btn-sm"><i class="fa fa-gavel"></i> Detail Kriteria dan Jenis Pelanggaran</a>
+                            <a href="<?= site_url('0/detail-pelanggaran') ?>" class="btn btn-secondary btn-sm"><i class="fa fa-gavel"></i> Detail Kriteria dan Jenis Pelanggaran</a>
                         </td>
                     </tr>
                 </table>
@@ -31,11 +31,11 @@
                             <th>#</th>
                             <th>NIS</th>
                             <th>Nama siswa</th>
-                            <th>Guru Pelapor</th>
-                            <th>Total Poin</th>
+                            <th>Guru pelapor</th>
+                            <th>Point</th>
                             <th>Huruf</th>
                             <th>Keputusan</th>
-                            <th>Tanggal & Waktu dibuat</th>
+                            <th>Waktu</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -136,54 +136,6 @@
     </div>
 </div>
 
-<!-- Modal Scrollable Detail Pelanggar -->
-<div class="modal fade" id="pelanggar-modal" tabindex="-1" role="dialog" aria-labelledby="pelanggar-modal" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="pelanggar-modal">
-                    <span><i class="fa fa-deaf"></i> Detail Pelanggar</span>
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form id="formPelanggaran" action="<?= site_url('admin/siswaController/create') ?>" method="post">
-                    <div class="form-group">
-                        <label for="kp">Kriteria Pelanggaran</label>
-                        <select class="form-control" name="kp" id="kp">
-                            <option value="">--Pilih Kriteria--</option>
-                            <?php foreach ($kriteria as $value) : ?>
-                                <option value="<?= $value->kriteria_id ?>"><?= $value->kriteria_nama ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                        <small id="kpHelp" class="form-text text-muted">Kriteria pelanggaran mengandung bobot total 100%</small>
-                    </div>
-                    <div class="form-group">
-                        <label for="pelanggaran">Nama Pelanggaran</label>
-                        <input type="text" class="form-control" name="pelanggaran" id="pelanggaran" aria-describedby="pelanggaranHelp" placeholder="Masukkan pelanggaran">
-                        <small id="pelanggaranHelp" class="form-text text-muted">pelanggaran</small>
-                    </div>
-                    <div class="form-group">
-                        <label for="point">Point</label>
-                        <input type="text" class="form-control" name="point" id="point" aria-describedby="pointHelp" placeholder="Masukkan point">
-                        <small id="pointHelp" class="form-text text-muted">Point max 100</small>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">
-                    Tutup <span><i class="fa fa-times"></i></span>
-                </button>
-                <a class="btn btn-success text-white" id="savePelanggaran">
-                    Simpan <span><i class="fa fa-save"></i></span>
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
-
 <script>
     var pelanggaran;
 
@@ -211,9 +163,18 @@
         //datatables
         $(document).ready(function() {
             pelanggaran = $('#dataTableHover').DataTable({
-                "processing": true,
-                "serverSide": true,
-                "ajax": "<?= site_url('admin/PelanggaranController/get') ?>",
+                rowReorder: {
+                    selector: 'td:nth-child(0)'
+                },
+                info: false,
+                // searching: false,
+                responsive: true,
+                processing: true,
+                serverSide: true,
+                // serverMethod: "post",
+                ajax: {
+                    url: "<?= site_url('admin/pelanggaranController/get') ?>",
+                },
 
                 buttons: [
                     'copyHtml5',
@@ -303,13 +264,26 @@
         })
     }
 
-    function detail(id) {
-        $('#pelanggar-modal').modal('show');
-    }
+    // function detail(id) {
+    //     $.ajax({
+    //         url: "<?= site_url('admin/pelanggaranController/get_detail/') ?>" + id,
+    //         dataType: "json",
+    //         success: function(response) {
+    //             $.each(response, function(i, item) {
+    //                 var $tr = $('<tr>').append(
+    //                     $('<td>').text(item.siswa_nis),
+    //                     $('<td>').text(item.siswa_nama),
+    //                     $('<td>').text(item.kriteria_nama)
+    //                 ).appendTo('#records_table');
+    //             })
+    //             $('#pelanggar-modal').modal('show');
+    //         }
+    //     })
+    // }
 
     function hapus(id) {
         Swal.fire({
-            title: 'Yakin untuk membatalkan laporan?',
+            title: 'Yakin untuk membatalkan semua pelanggar yang dipilih?',
             // text: "siswa yang dihapus tidak akan dapat mengakses aplikasi LANGSIS",
             icon: 'warning',
             showCancelButton: true,

@@ -85,8 +85,8 @@ class Pelanggaran extends CI_Controller
             $temp[] = htmlspecialchars($value->siswa_nama, ENT_QUOTES, 'UTF-8');
             $temp[] = htmlspecialchars($value->kelas_nama, ENT_QUOTES, 'UTF-8');
             $temp[] = htmlspecialchars($value->kriteria_nama, ENT_QUOTES, 'UTF-8');
-            $temp[] = htmlspecialchars(date("d F Y", strtotime($value->pcreate)), ENT_QUOTES, 'UTF-8');
-            $temp[] = htmlspecialchars(date("H:i", strtotime($value->pcreate)) . ' WIT', ENT_QUOTES, 'UTF-8');
+            $temp[] = htmlspecialchars($value->topskor, ENT_QUOTES, 'UTF-8');
+            $temp[] = htmlspecialchars(date("d F Y / H:i", strtotime($value->pcreate)), ENT_QUOTES, 'UTF-8');
             if ($value->request_hapus == 0) :
                 $temp[] = '<a href="javascript:void(0)" onclick="reqhapus(' . "'" . $value->sid . "'" . ')" class="btn btn-danger btn-sm text-white link"><i class="fa fa-bell"></i> Request pembatalan</a>';
             endif;

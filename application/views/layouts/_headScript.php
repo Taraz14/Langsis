@@ -25,6 +25,10 @@
             cursor: -webkit-grab;
             cursor: pointer;
         }
+
+        .table>tbody>tr>td {
+            vertical-align: middle !important;
+        }
     </style>
 </head>
 

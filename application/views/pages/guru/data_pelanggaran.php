@@ -25,8 +25,8 @@
                             <th>Nama siswa</th>
                             <th>Kelas</th>
                             <th>Kriteria</th>
-                            <th>Tanggal dibuat</th>
-                            <th>Waktu dibuat</th>
+                            <th>Poin</th>
+                            <th>Waktu</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>

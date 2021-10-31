@@ -64,7 +64,7 @@
                                         <hr>
                                         <div class="form-group">
                                             <!-- <a href="<?= site_url('login'); ?>" class="btn btn-primary btn-block">Masuk</a> -->
-                                            <button type="submit" class="btn btn-primary btn-block">Masuk</button>
+                                            <button type="submit" class="btn btn-primary btn-block" style="background-color:#3F51B5">Masuk</button>
                                         </div>
                                     </form>
                                     <div class="text-center">

@@ -38,7 +38,7 @@ class PelanggaranModel extends CI_Model
     }
 
     /**
-     * Detail Pelanggaran
+     * Detail JP
      * @return array
      * 
      */
@@ -54,6 +54,20 @@ class PelanggaranModel extends CI_Model
     public function get()
     {
         return $this->get_pelanggaran();
+    }
+
+    public function get_detPelanggaran($id)
+    {
+        $this->db->select('*')
+            ->from($this->pelanggaran . ' p')
+            ->join($this->jp . ' jp', 'p.jp_id = jp.jp_id', 'left')
+            ->join($this->kp . ' kp', 'p.kriteria_id = kp.kriteria_id', 'left')
+            ->join($this->siswa . ' s', 'p.siswa_id = s.siswa_id', 'left')
+            ->join($this->kelas . ' k', 's.kelas_id = k.kelas_id', 'inner')
+            ->join($this->users . ' u', 'p.users_id = u.users_id', 'left');
+
+        $this->db->where('p.siswa_id', $id);
+        return $this->db->get();
     }
 
     /**
@@ -145,6 +159,11 @@ class PelanggaranModel extends CI_Model
     }
 
     public function deleteconfirmed($id)
+    {
+        return $this->db->delete($this->pelanggaran, $id);
+    }
+
+    public function deletePelanggar($id)
     {
         return $this->db->delete($this->pelanggaran, $id);
     }
