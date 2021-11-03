@@ -58,6 +58,7 @@ class GuruController extends CI_Controller
                 'users_username' => $input['nip'],
                 // 'users_password' => $input['nip'],
                 'users_password' => hash('sha512', $input['nip'] . config_item('encryption_key')),
+                'users_avatar' => 'noimage.png',
                 'users_role' => 55,
                 'created_at' => date("Y-m-d H:i:s")
             );

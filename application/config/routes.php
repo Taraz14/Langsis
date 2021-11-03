@@ -77,6 +77,13 @@ $route['0/detail-pelanggar/(:any)'] = 'admin/pelanggaranController/get_detail/$1
 $route['1/data-siswa'] = 'guru/SiswaController';
 $route['1/pelanggaran'] = 'guru/Pelanggaran';
 
+/**
+ * All role
+ *
+ */
+$route['profile'] = 'Profile';
+$route['edit-profile'] = 'Profile/upload';
+
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

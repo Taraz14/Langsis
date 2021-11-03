@@ -35,12 +35,12 @@
                     </tr>
                 </table>
 
-                <table class="table align-items-center table-flush table-hover display nowrap" width="100%" id="dataTableHover">
+                <table class="table align-items-center table-flush table-hover display wrap" width="100%" id="dataTableHover">
                     <thead class="thead-dark">
                         <tr>
                             <th>#</th>
-                            <th>NIS</th>
                             <th>Nama siswa</th>
+                            <th>NIS</th>
                             <th>Tanggal dibuat</th>
                             <th>Waktu dibuat</th>
                             <th>Aksi</th>
@@ -147,7 +147,7 @@
         $(document).ready(function() {
             siswa = $('#dataTableHover').DataTable({
                 rowReorder: {
-                    selector: 'td:nth-child(2)'
+                    selector: 'td:nth-child(0)'
                 },
                 info: false,
                 // searching: false,
@@ -167,10 +167,10 @@
                         data: "siswa_id"
                     },
                     {
-                        data: "siswa_nis"
+                        data: "siswa_nama"
                     },
                     {
-                        data: "siswa_nama"
+                        data: "siswa_nis"
                     },
                     {
                         data: "created_at"

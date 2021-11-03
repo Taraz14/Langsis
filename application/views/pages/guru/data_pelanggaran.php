@@ -21,8 +21,8 @@
                     <thead class="thead-dark">
                         <tr>
                             <th>#</th>
-                            <th>NIS</th>
                             <th>Nama siswa</th>
+                            <th>NIS</th>
                             <th>Kelas</th>
                             <th>Kriteria</th>
                             <th>Poin</th>
@@ -50,7 +50,7 @@
         $(document).ready(function() {
             pelanggaran = $('#dataTableHover').DataTable({
                 rowReorder: {
-                    selector: 'td:nth-child(2)'
+                    selector: 'td:nth-child(0)'
                 },
                 info: false,
                 // searching: false,

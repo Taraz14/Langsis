@@ -1,17 +1,31 @@
-        <!-- TopBar -->
-        <nav class="navbar navbar-expand navbar-light bg-navbar topbar mb-4 static-top">
-            <button id="sidebarToggleTop" class="btn btn-link rounded-circle mr-3">
-                <i class="fa fa-bars"></i>
-            </button>
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item dropdown no-arrow">
-                    <a style="cursor:auto" class="nav-link dropdown-toggle">
-                        <span class="ml-2 d-none d-lg-inline text-white small">
-                            <?= $this->session->userdata('rolename') ?>
-                        </span>
-                    </a>
-                </li>
-                <!-- <li class="nav-item dropdown no-arrow">
+       <style>
+           .gambarx {
+               object-fit: cover;
+               width: 100%;
+               height: 100%;
+               background-position: center center;
+               background-repeat: no-repeat;
+           }
+       </style>
+
+       <?php
+        $id = $this->session->userdata('uid');
+        $user = $this->user->get($id)->row();
+        ?>
+       <!-- TopBar -->
+       <nav class="navbar navbar-expand navbar-light bg-navbar topbar mb-4 static-top">
+           <button id="sidebarToggleTop" class="btn btn-link rounded-circle mr-3">
+               <i class="fa fa-bars"></i>
+           </button>
+           <ul class="navbar-nav ml-auto">
+               <li class="nav-item dropdown no-arrow">
+                   <a style="cursor:auto" class="nav-link dropdown-toggle">
+                       <span class="ml-2 d-none d-lg-inline text-white small">
+                           <?= $this->session->userdata('rolename') ?>
+                       </span>
+                   </a>
+               </li>
+               <!-- <li class="nav-item dropdown no-arrow">
                     <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-search fa-fw"></i>
                     </a>
@@ -149,25 +163,25 @@
                         <a class="dropdown-item text-center small text-gray-500" href="#">View All Taks</a>
                     </div>
                 </li> -->
-                <div class="topbar-divider d-none d-sm-block"></div>
-                <!-- Admin -->
-                <?php if ($this->session->userdata('role') == 99) : ?>
-                    <li class="nav-item dropdown no-arrow">
-                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img class="img-profile rounded-circle" src="<?= base_url() ?>/public/admin/img/boy.png" style="max-width: 60px">
-                            <span class="ml-2 d-none d-lg-inline text-white small">
-                                <?php
+               <div class="topbar-divider d-none d-sm-block"></div>
+               <!-- Admin -->
+               <?php if ($this->session->userdata('role') == 99) : ?>
+                   <li class="nav-item dropdown no-arrow">
+                       <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                           <img class="img-profile rounded-circle gambarx" src="<?= base_url('/public/admin/img/profile/') . $user->users_avatar ?>" style="max-width: 60px">
+                           <span class="ml-2 d-none d-lg-inline text-white small">
+                               <?php
                                 $nama = $this->session->userdata('nama');
                                 echo $arr = explode(' ', trim($nama))[0];
                                 ?>
-                            </span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="<?= site_url('profile') ?>">
-                                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Profile
-                            </a>
-                            <!-- <a class="dropdown-item" href="#">
+                           </span>
+                       </a>
+                       <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                           <a class="dropdown-item" href="<?= site_url('profile') ?>">
+                               <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                               Profile
+                           </a>
+                           <!-- <a class="dropdown-item" href="#">
                             <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                             Settings
                         </a>
@@ -175,30 +189,30 @@
                             <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                             Activity Log
                         </a> -->
-                            <!-- <div class="dropdown-divider"></div>
+                           <!-- <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="javascript:void(0);" data-toggle="modal" data-target="#logoutModal">
                                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Logout
                             </a> -->
-                        </div>
-                    </li>
-                <?php endif; ?>
-                <!-- /Admin -->
-                <!-- Guru -->
-                <?php if ($this->session->userdata('role') == 55) : ?>
-                    <li class="nav-item dropdown no-arrow">
-                        <a class="nav-link dropdown-toggle" href="#">
-                            <img class="img-profile rounded-circle" src="<?= base_url() ?>/public/admin/img/boy.png" style="max-width: 60px">
-                            <span class="ml-2 d-none d-lg-inline text-white small">
-                                <?php
+                       </div>
+                   </li>
+               <?php endif; ?>
+               <!-- /Admin -->
+               <!-- Guru -->
+               <?php if ($this->session->userdata('role') == 55) : ?>
+                   <li class="nav-item dropdown no-arrow">
+                       <a class="nav-link dropdown-toggle" href="#">
+                           <img class="img-profile rounded-circle gambarx" src="<?= base_url('/public/admin/img/profile/') . $user->users_avatar ?>" style="max-width: 60px">
+                           <span class="ml-2 d-none d-lg-inline text-white small">
+                               <?php
                                 $nama = $this->session->userdata('nama');
                                 echo $arr = explode(' ', trim($nama))[0];
                                 ?>
-                            </span>
-                        </a>
-                    </li>
-                <?php endif; ?>
-                <!-- Guru -->
-            </ul>
-        </nav>
-        <!-- Topbar -->
+                           </span>
+                       </a>
+                   </li>
+               <?php endif; ?>
+               <!-- Guru -->
+           </ul>
+       </nav>
+       <!-- Topbar -->

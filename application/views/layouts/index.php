@@ -1,4 +1,5 @@
 <?php
+$id = $this->session->userdata('uid');
 require_once('_headScript.php');
 require_once('_sidebar.php');
 require_once('_navbar.php');

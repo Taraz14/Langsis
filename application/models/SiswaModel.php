@@ -85,8 +85,8 @@ class SiswaModel extends CI_Model
             if ($this->session->userdata('role') == 55) :
                 $data[] = array(
                     'siswa_id' =>  $no++,
-                    'siswa_nis' => $jval->siswa_nis,
                     'siswa_nama' => $jval->siswa_nama,
+                    'siswa_nis' => $jval->siswa_nis,
                     'created_at' => date("d F Y", strtotime($jval->created_at)),
                     'updated_at' => date("H:i", strtotime($jval->created_at)) . ' WIT',
                     'aksi'  => '<a href="#" class="btn btn-danger btn-sm text-white link laporkan-mod" onclick="openModal(' . "'" . $id . ',' . $nama . "'" . ')" data-toggle="modal"><i class="fa fa-gavel"></i> Laporkan</a>'

@@ -140,7 +140,7 @@ class PelanggaranController extends CI_Controller
                 $temp[] = '<a href="' . site_url('0/detail-pelanggar/' . $value->sid) . '"class="btn btn-success btn-sm text-white link"><i class="fa fa-eye"></i> Detail Pelanggar</a>';
             endif;
             if ($value->request_hapus == 1) :
-                $temp[] = '<a href="javascript:void(0)" onclick="detail(' . "'" . $value->sid . "'" . ')"  class="btn btn-success btn-sm text-white link mb-2"><i class="fa fa-eye"></i> Detail</a> <a href="javascript:void(0)" onclick="tolak(' . "'" . $value->sid . "'" . ')" class="btn btn-warning btn-sm text-white link mb-2"><i class="fa fa-times"></i> Tolak</a> <a href="javascript:void(0)" onclick="hapus(' . "'" . $value->sid . "'" . ')" class="btn btn-danger btn-sm text-white link mb-1"><i class="fa fa-trash"></i> Hapus pelanggar</a> ';
+                $temp[] = '<a href="' . site_url('0/detail-pelanggar/' . $value->sid) . '"class="btn btn-success btn-sm text-white link mb-2"><i class="fa fa-eye"></i> Detail Pelanggar</a> <a href="javascript:void(0)" onclick="tolak(' . "'" . $value->sid . "'" . ')" class="btn btn-warning btn-sm text-white link mb-2"><i class="fa fa-times"></i> Tolak</a> <a href="javascript:void(0)" onclick="hapus(' . "'" . $value->sid . "'" . ')" class="btn btn-danger btn-sm text-white link mb-2"><i class="fa fa-trash"></i> Hapus pelanggar</a> ';
             endif;
 
             $guru[] = $temp;

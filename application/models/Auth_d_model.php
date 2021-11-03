@@ -25,6 +25,7 @@ class Auth_d_model extends CI_Model
                     'role'              => $row->users_role,
                     'rolename'          => $row->users_role == 99 ? 'Administrator' : 'Guru',
                     'status'         => $row->users_status,
+                    'avatar'           => $row->users_avatar,
                     'isLoggon'     => true,
                     'isAdmin'       => $row->users_role == 99 ? true : false,
                     'isGuru' => $row->users_role == 55 ? true : false

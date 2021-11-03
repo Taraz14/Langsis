@@ -23,20 +23,22 @@
 <!---Container Fluid-->
 </div>
 <!-- Footer -->
-<footer class="sticky-footer bg-white">
+<?php if ($this->uri->segment(1) != 'profile') { ?>
+    <footer class="sticky-footer bg-white">
 
-    <div class="container my-auto py-2">
-        <div class="copyright text-center my-auto">
-            <span>copyright &copy; <script>
-                    document.write(new Date().getFullYear());
-                </script> - developed by
-                <b><a href="https://github.com/taraz14" target="_blank">Dante</a></b> templated by
-                <b><a href="https://indrijunanda.gitlab.io/" target="_blank">indrijunanda</a></b>
+        <div class="container my-auto py-2">
+            <div class="copyright text-center my-auto">
+                <span>copyright &copy; <script>
+                        document.write(new Date().getFullYear());
+                    </script> - developed by
+                    <b><a href="https://github.com/taraz14" target="_blank">Dante</a></b> templated by
+                    <b><a href="https://indrijunanda.gitlab.io/" target="_blank">indrijunanda</a></b>
 
-            </span>
+                </span>
+            </div>
         </div>
-    </div>
-</footer>
+    </footer>
+<?php } ?>
 <!-- Footer -->
 </div>
 </div>

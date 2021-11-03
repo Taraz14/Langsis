@@ -81,8 +81,8 @@ class Pelanggaran extends CI_Controller
         foreach ($data as $value) {
             $temp = [];
             $temp[] = htmlspecialchars($no++, ENT_QUOTES, 'UTF-8');
-            $temp[] = htmlspecialchars($value->siswa_nis, ENT_QUOTES, 'UTF-8');
             $temp[] = htmlspecialchars($value->siswa_nama, ENT_QUOTES, 'UTF-8');
+            $temp[] = htmlspecialchars($value->siswa_nis, ENT_QUOTES, 'UTF-8');
             $temp[] = htmlspecialchars($value->kelas_nama, ENT_QUOTES, 'UTF-8');
             $temp[] = htmlspecialchars($value->kriteria_nama, ENT_QUOTES, 'UTF-8');
             $temp[] = htmlspecialchars($value->topskor, ENT_QUOTES, 'UTF-8');

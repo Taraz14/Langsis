@@ -80,6 +80,13 @@
     }
 
     window.onload = () => {
+        $("#telepon").inputFilter(function(value) {
+            return /^\d*$/.test(value) && (value === "" || parseInt(value.length) <= 13);
+        });
+        $("#nip").inputFilter(function(value) {
+            return /^\d*$/.test(value) && (value === "" || parseInt(value.length) <= 18);
+        });
+
         $(document).ready(function() {
             guru = $('#dataTableHover').DataTable({
                 "processing": true,
