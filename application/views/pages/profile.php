@@ -95,6 +95,7 @@
                         </label>
                         <input accept="image/*" type='file' name="avatar" id="imgInp" />
                     </div>
+
                     <div class="form-group mt-4">
                         <label for="username">Username</label>
                         <input type="text" class="form-control" name="username" id="username" placeholder="Masukkan Username baru" value="<?= $user->users_username ?>">

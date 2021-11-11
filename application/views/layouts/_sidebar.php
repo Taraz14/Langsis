@@ -110,7 +110,11 @@
           </li>
       <?php endif; ?>
 
-
+      <li class="nav-item">
+          <a class="nav-link" href="https://youtu.be/llNEJg2V4CA" target="_blank">
+              <i class="fas fa-fw fa-home"></i>
+              <span>Video Tutorial</span></a>
+      </li>
 
       <hr class="sidebar-divider">
       <div class="version">Langsis Version : Beta 1.0</div>

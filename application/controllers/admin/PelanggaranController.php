@@ -28,7 +28,6 @@ class PelanggaranController extends CI_Controller
         $data = [
             'content' => 'pages/admin/data_pelanggaran',
             'head' => 'Pelanggaran',
-            // 'jurusan' => $this->JurusanModel->get()->result()
             'kriteria' => $this->pelanggaran->get_kriteria()->result()
         ];
 

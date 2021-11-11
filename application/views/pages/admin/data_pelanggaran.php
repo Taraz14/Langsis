@@ -3,7 +3,16 @@
     .table {
         width: 100% !important;
     }
+
+    .disabled-link {
+        pointer-events: none;
+    }
 </style>
+<?php foreach ($kriteria as $val) {
+    $arr[] = $val->bobot_kriteria;
+}
+$kpsum = array_sum($arr);
+?>
 <div class="row">
     <!-- DataTable with Hover -->
     <div class="col-lg-12">
@@ -15,16 +24,22 @@
                 <table width="60%" class="mb-3">
                     <tr>
                         <td>
-                            <a href="#" class="btn btn-secondary btn-sm" id="kriteria"><i class="fa fa-plus"></i> Tambah Kriteria Pelanggaran</a>
+                            <?php if ($kpsum < 100) : ?>
+                                <a href="#" class="btn btn-warning btn-sm" id="kriteria"><i class="fa fa-plus"></i> Tambah Kriteria Pelanggaran</a>
+                            <?php endif; ?>
+                            <?php if ($kpsum >= 100) : ?>
+                                <a href="#" class="btn btn-secondary btn-sm disabled-link" id="kriteria"> Kriteria sudah mencapai batas</a>
+                            <?php endif; ?>
                         </td>
                         <td>
-                            <a href="#" class="btn btn-secondary btn-sm" id="sanksi"><i class="fa fa-plus"></i> Tambah Jenis Pelanggaran</a>
+                            <a href="#" class="btn btn-warning btn-sm" id="sanksi"><i class="fa fa-plus"></i> Tambah Jenis Pelanggaran</a>
                         </td>
                         <td>
-                            <a href="<?= site_url('0/detail-pelanggaran') ?>" class="btn btn-secondary btn-sm"><i class="fa fa-gavel"></i> Detail Kriteria dan Jenis Pelanggaran</a>
+                            <a href="<?= site_url('0/detail-pelanggaran') ?>" class="btn btn-warning btn-sm"><i class="fa fa-gavel"></i> Detail Kriteria dan Jenis Pelanggaran</a>
                         </td>
                     </tr>
                 </table>
+
                 <table class="table align-items-center table-flush table-hover" width="100%" id="dataTableHover">
                     <thead class="thead-dark">
                         <tr>
@@ -108,7 +123,8 @@
                             <option value="">--Pilih Kriteria--</option>
                             <?php foreach ($kriteria as $value) : ?>
                                 <option value="<?= $value->kriteria_id ?>"><?= $value->kriteria_nama ?></option>
-                            <?php endforeach; ?>
+                            <?php endforeach;
+                            ?>
                         </select>
                         <small id="kpHelp" class="form-text text-muted">Kriteria pelanggaran mengandung bobot total 100%</small>
                     </div>
